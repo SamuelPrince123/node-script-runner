@@ -3,7 +3,7 @@ name: Run Node.js Scripts
 on:
   push:
     branches:
-      - master
+      - master  # or 'main' if that is your branch
 
 jobs:
   run-node-scripts:
@@ -19,13 +19,17 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: firebase-fetcher
 
       - name: Decode Firebase Service Account Key
         run: |
           echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" | base64 -d > serviceAccountKey.json
+        working-directory: firebase-fetcher
 
       - name: Run fetchKeywords.js
-        run: node firebase-fetcher/fetchKeywords.js
+        run: node fetchKeywords.js
+        working-directory: firebase-fetcher
 
       - name: Run Gkeywordresult.js (after fetchKeywords)
-        run: node firebase-fetcher/Gkeywordresult.js
+        run: node Gkeywordresult.js
+        working-directory: firebase-fetcher
