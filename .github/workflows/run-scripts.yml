@@ -1,1 +1,25 @@
+name: Run Node.js Scripts
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  run-node-scripts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Run fetchKeywords.js
+        run: node firebase-fetcher/fetchKeywords.js
+
+      - name: Run Gkeywordresult.js
+        run: node firebase-fetcher/Gkeywordresult.js
 
