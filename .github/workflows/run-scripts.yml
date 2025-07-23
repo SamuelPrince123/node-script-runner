@@ -17,9 +17,15 @@ jobs:
         with:
           node-version: 18
 
+      - name: Install dependencies
+        run: npm install
+
+      - name: Decode Firebase Service Account Key
+        run: |
+          echo "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}" | base64 -d > serviceAccountKey.json
+
       - name: Run fetchKeywords.js
         run: node firebase-fetcher/fetchKeywords.js
 
-      - name: Run Gkeywordresult.js
+      - name: Run Gkeywordresult.js (after fetchKeywords)
         run: node firebase-fetcher/Gkeywordresult.js
-
